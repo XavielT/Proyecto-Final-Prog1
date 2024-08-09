@@ -20,20 +20,41 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
+        panel.setBackground(Color.LIGHT_GRAY);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.setLayout(new GridLayout(3, 2));
+        
+        JPanel mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        mainPanel.add(panel);
+        add(mainPanel);
+
 
         JLabel lblUsername = new JLabel("Username:");
+        lblUsername.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblUsername.setForeground(Color.DARK_GRAY);
         txtUsername = new JTextField();
 
         JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblPassword.setForeground(Color.DARK_GRAY);
         txtPassword = new JPasswordField();
 
         btnLogin = new JButton("Login");
+        btnLogin.setFont(new Font("Arial", Font.BOLD, 14));
+        btnLogin.setBackground(Color.DARK_GRAY);
+        btnLogin.setForeground(Color.WHITE);
+        btnLogin.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         btnRegister = new JButton("Register");
+        btnRegister.setFont(new Font("Arial", Font.BOLD, 14));
+        btnRegister.setBackground(Color.DARK_GRAY);
+        btnRegister.setForeground(Color.WHITE);
+        btnRegister.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
 
         panel.add(lblUsername);
+        
         panel.add(txtUsername);
         panel.add(lblPassword);
+        
         panel.add(txtPassword);
         panel.add(btnLogin);
         panel.add(btnRegister);

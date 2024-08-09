@@ -84,6 +84,7 @@ public class ProductFormFrame extends JFrame {
                     product.setCategory(txtCategory.getText());
                     product.setPrice(Double.parseDouble(txtPrice.getText()));
                     product.setQuantity(Integer.parseInt(txtQuantity.getText()));
+                    ProductManager.getInstance().updateProduct(product);
                     productTableModel.updateProduct(product);
                 }
                 dispose();

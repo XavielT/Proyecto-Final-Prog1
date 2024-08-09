@@ -3,6 +3,7 @@ package view;
 import model.Product;
 import service.ProductManager;
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductTableModel extends AbstractTableModel {
@@ -10,7 +11,7 @@ public class ProductTableModel extends AbstractTableModel {
     private List<Product> products;
 
     public ProductTableModel() {
-        products = ProductManager.getInstance().getAllProducts();
+        products = new ArrayList<>(ProductManager.getInstance().getAllProducts());
     }
 
     @Override
@@ -52,12 +53,21 @@ public class ProductTableModel extends AbstractTableModel {
 
     public void updateProduct(Product product) {
         int index = products.indexOf(product);
-        fireTableRowsUpdated(index, index);
+        if (index != -1) {
+            fireTableRowsUpdated(index, index);
+        }
     }
 
     public void removeProduct(Product product) {
         int index = products.indexOf(product);
-        products.remove(product);
-        fireTableRowsDeleted(index, index);
+        if (index != -1) {
+            products.remove(index);
+            fireTableRowsDeleted(index, index);
+        }
+    }
+
+    public void refreshData() {
+        products = new ArrayList<>(ProductManager.getInstance().getAllProducts());
+        fireTableDataChanged();
     }
 }

@@ -4,14 +4,19 @@ import model.User;
 import service.UserManager;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserTableModel extends AbstractTableModel {
-    private final String[] columnNames = {"Usuario", "Nombre", "Apellido", "Teléfono", "Correo"};
+
+    private static final long serialVersionUID = 1L;
+    
+    private static final String[] COLUMN_NAMES = {"Usuario", "Nombre", "Apellido", "Teléfono", "Correo"};
+    
     private List<User> users;
 
     public UserTableModel() {
-        users = UserManager.getInstance().getAllUsers();
+        users = new ArrayList<>(UserManager.getInstance().getAllUsers());
     }
 
     @Override
@@ -21,12 +26,12 @@ public class UserTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnNames.length;
+        return COLUMN_NAMES.length;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        return columnNames[columnIndex];
+        return COLUMN_NAMES[columnIndex];
     }
 
     @Override
@@ -38,7 +43,7 @@ public class UserTableModel extends AbstractTableModel {
             case 2: return user.getLastName();
             case 3: return user.getPhoneNumber();
             case 4: return user.getEmail();
-            default: return null;
+            default: throw new IllegalArgumentException("Invalid column index");
         }
     }
 
@@ -48,12 +53,21 @@ public class UserTableModel extends AbstractTableModel {
 
     public void updateUser(User user) {
         int index = users.indexOf(user);
-        fireTableRowsUpdated(index, index);
+        if (index != -1) {
+            fireTableRowsUpdated(index, index);
+        }
     }
 
     public void removeUser(User user) {
         int index = users.indexOf(user);
-        users.remove(user);
-        fireTableRowsDeleted(index, index);
+        if (index != -1) {
+            users.remove(index);
+            fireTableRowsDeleted(index, index);
+        }
+    }
+
+    public void refreshData() {
+        users = new ArrayList<>(UserManager.getInstance().getAllUsers());
+        fireTableDataChanged();
     }
 }

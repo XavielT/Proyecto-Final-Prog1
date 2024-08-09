@@ -4,7 +4,6 @@ view\ProductFormFrame$2.class
 service\UserManager.class
 view\ProductFormFrame$3.class
 view\ProductFormFrame.class
-view\ProductManagementFrame$1.class
 com\mycompany\proyectofinal\ProyectoFinal.class
 service\ProductManager.class
 view\LoginFrame$2.class
@@ -12,13 +11,13 @@ view\ProductFormFrame$1.class
 view\MainFrame.class
 main\Main.class
 view\ProductTableModel.class
+service\DatabaseConnection.class
 model\Product.class
 view\UserTableModel.class
 view\UserManagementFrame.class
 view\RegisterFrame$2.class
 view\RegisterFrame.class
 model\Factory.class
-view\ProductManagementFrame$2.class
 view\ProductManagementFrame.class
 model\User.class
 view\LoginFrame.class

@@ -5,30 +5,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductManager {
-    private List<Product> products = new ArrayList<>();
-
-    // Singleton para la gestión de productos
     private static ProductManager instance;
+    private List<Product> products;
 
-    private ProductManager() {}
+    private ProductManager() {
+        products = new ArrayList<>();
+        // Inicializa productos si es necesario
+    }
 
-    public static ProductManager getInstance() {
+    public static synchronized ProductManager getInstance() {
         if (instance == null) {
             instance = new ProductManager();
         }
         return instance;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
-    }
-
     public List<Product> getAllProducts() {
         return products;
     }
 
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
     public void updateProduct(Product product) {
-        // Implementación para actualizar el producto
+        // Actualiza el producto en la lista, si es necesario
     }
 
     public void deleteProduct(Product product) {

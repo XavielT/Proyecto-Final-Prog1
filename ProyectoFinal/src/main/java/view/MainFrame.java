@@ -14,11 +14,22 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Creación de botones
         btnUserManagement = new JButton("Gestión de Usuarios");
         btnProductManagement = new JButton("Gestión de Productos");
         btnLogout = new JButton("Cerrar Sesión");
 
-        JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
+        // Estilo de los botones
+        btnUserManagement.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnProductManagement.setFont(new Font("Arial", Font.PLAIN, 14));
+        btnLogout.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // Panel para contener los botones
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Ajusta los márgenes internos
+
+        // Añadir botones al panel
         panel.add(btnUserManagement);
         panel.add(btnProductManagement);
         panel.add(btnLogout);

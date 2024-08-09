@@ -5,8 +5,6 @@ import service.ProductManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ProductManagementFrame extends JFrame {
     private JTable productTable;
@@ -16,41 +14,61 @@ public class ProductManagementFrame extends JFrame {
 
     public ProductManagementFrame() {
         setTitle("Gestión de Productos");
-        setSize(600, 400);
+        setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Inicializar modelo de la tabla y tabla
         productTableModel = new ProductTableModel();
         productTable = new JTable(productTableModel);
+        productTable.setFillsViewportHeight(true);
+        productTable.setRowHeight(30);
 
+        // Estilo de la tabla
+        productTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        productTable.getTableHeader().setBackground(new Color(0x2E86C1));
+        productTable.getTableHeader().setForeground(Color.WHITE);
+        productTable.setSelectionBackground(new Color(0xAED6F1));
+        productTable.setSelectionForeground(Color.BLACK);
+        productTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
+        // Inicializar botones
         btnNewProduct = new JButton("Nuevo Producto");
         btnBack = new JButton("Volver");
 
+        // Estilo de los botones
+        btnNewProduct.setPreferredSize(new Dimension(150, 40));
+        btnBack.setPreferredSize(new Dimension(150, 40));
+
+        btnNewProduct.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        btnNewProduct.setBackground(new Color(0x28B463));
+        btnNewProduct.setForeground(Color.WHITE);
+
+        btnBack.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        btnBack.setBackground(new Color(0xC0392B));
+        btnBack.setForeground(Color.WHITE);
+
+        // Panel de botones
         JPanel panelButtons = new JPanel();
-        panelButtons.setLayout(new FlowLayout());
+        panelButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panelButtons.add(btnNewProduct);
         panelButtons.add(btnBack);
 
+        // Añadir componentes al JFrame
         add(new JScrollPane(productTable), BorderLayout.CENTER);
         add(panelButtons, BorderLayout.SOUTH);
 
         // Acción para el botón Nuevo Producto
-        btnNewProduct.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ProductFormFrame productFormFrame = new ProductFormFrame(null, productTableModel);
-                productFormFrame.setVisible(true);
-            }
+        btnNewProduct.addActionListener(e -> {
+            ProductFormFrame productFormFrame = new ProductFormFrame(null, productTableModel);
+            productFormFrame.setVisible(true);
         });
 
         // Acción para el botón Volver
-        btnBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainFrame mainFrame = new MainFrame();
-                mainFrame.setVisible(true);
-                dispose();
-            }
+        btnBack.addActionListener(e -> {
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.setVisible(true);
+            dispose();
         });
 
         // Acción al seleccionar un producto en la tabla
@@ -66,4 +84,3 @@ public class ProductManagementFrame extends JFrame {
         });
     }
 }
-
