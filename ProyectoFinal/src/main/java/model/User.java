@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String password;
 
+    // Constructor del usuario.
     public User(String username, String firstName, String lastName, String phoneNumber, String email, String password) {
         this.username = username;
         this.firstName = firstName;
@@ -17,7 +18,7 @@ public class User {
         this.password = password;
     }
 
-    // Getters y Setters
+    // Getters y Setters para los atributos del usuario.
     public String getUsername() {
         return username;
     }

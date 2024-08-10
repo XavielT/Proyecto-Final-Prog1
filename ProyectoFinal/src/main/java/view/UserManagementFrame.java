@@ -5,6 +5,8 @@ import service.UserManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class UserManagementFrame extends JFrame {
 
@@ -12,6 +14,8 @@ public class UserManagementFrame extends JFrame {
 
     private JTable userTable;
     private JButton btnBack;
+    private JButton btnEdit;
+    private JButton btnDelete;
     private UserTableModel userTableModel;
 
     public UserManagementFrame() {
@@ -24,21 +28,31 @@ public class UserManagementFrame extends JFrame {
     }
 
     private void initUI() {
+        // Modelo de tabla y la tabla.
         userTableModel = new UserTableModel();
         userTable = new JTable(userTableModel);
 
+        // Botones.
         btnBack = createButton("Volver", Color.LIGHT_GRAY, Color.BLACK);
+        btnEdit = createButton("Modificar", Color.BLUE, Color.WHITE);
+        btnDelete = createButton("Eliminar", Color.RED, Color.WHITE);
 
+        // Panel para los botones.
         JPanel panelButtons = new JPanel();
         panelButtons.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        panelButtons.add(btnEdit);
+        panelButtons.add(btnDelete);
         panelButtons.add(btnBack);
 
+        // Panel con scroll para la tabla de usuarios.
         JScrollPane scrollPane = new JScrollPane(userTable);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Usuarios"));
 
+        // Añadir componentes al JFrame.
         add(scrollPane, BorderLayout.CENTER);
         add(panelButtons, BorderLayout.SOUTH);
 
+        // Configuración de los listeners.
         setActionListeners();
     }
 
@@ -52,19 +66,36 @@ public class UserManagementFrame extends JFrame {
     }
 
     private void setActionListeners() {
+        // Acción para el botón "Volver".
         btnBack.addActionListener(e -> {
             MainFrame mainFrame = new MainFrame();
             mainFrame.setVisible(true);
             dispose();
         });
 
-        userTable.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = userTable.getSelectedRow();
-                if (selectedRow >= 0) {
-                    User selectedUser = userTableModel.getUserAt(selectedRow);
-                    // Aquí se podría abrir una ventana de edición de usuario si se quisiera implementar
+        // Acción para el botón "Modificar".
+        btnEdit.addActionListener(e -> {
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                User selectedUser = userTableModel.getUserAt(selectedRow);
+                new EditUserDialog(this, selectedUser, userTableModel).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario para modificar.");
+            }
+        });
+
+        // Acción para el botón "Eliminar".
+        btnDelete.addActionListener(e -> {
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                User selectedUser = userTableModel.getUserAt(selectedRow);
+                int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar este usuario?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    UserManager.getInstance().deleteUser(selectedUser);
+                    userTableModel.refreshData();
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario para eliminar.");
             }
         });
     }

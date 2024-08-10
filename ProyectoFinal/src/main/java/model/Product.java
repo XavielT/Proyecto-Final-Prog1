@@ -7,6 +7,7 @@ public class Product {
     private double price;
     private int quantity;
 
+    // Constructor del product.
     public Product(String name, String brand, String category, double price, int quantity) {
         this.name = name;
         this.brand = brand;
@@ -15,7 +16,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    // Getters y Setters
+    // Getters y Setters para los atributos del product.
     public String getName() {
         return name;
     }

@@ -25,13 +25,16 @@ public class ProductFormFrame extends JFrame {
         this.product = product;
         this.productTableModel = productTableModel;
 
+        //Configuración de la ventana.
         setTitle(product == null ? "Nuevo Producto" : "Editar Producto");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //Panel para los campos del formulario y su diseno.
         JPanel panel = new JPanel(new GridLayout(6, 2));
 
+        //Etiquetas y campos de texto para el formulario.
         JLabel lblName = new JLabel("Nombre:");
         txtName = new JTextField(product != null ? product.getName() : "");
 
@@ -47,10 +50,12 @@ public class ProductFormFrame extends JFrame {
         JLabel lblQuantity = new JLabel("Cantidad Disponible:");
         txtQuantity = new JTextField(product != null ? String.valueOf(product.getQuantity()) : "");
 
+        //Botones para guardar, eliminar y volver.
         btnSave = new JButton("Guardar");
         btnDelete = new JButton("Eliminar");
         btnBack = new JButton("Volver");
 
+        //Añadir componentes al panel.
         panel.add(lblName);
         panel.add(txtName);
         panel.add(lblBrand);
@@ -64,21 +69,22 @@ public class ProductFormFrame extends JFrame {
         panel.add(btnSave);
         panel.add(btnDelete);
 
+        //Añadir el panel al contenedor principal.
         add(panel, BorderLayout.CENTER);
         add(btnBack, BorderLayout.SOUTH);
 
-        // Acción para el botón Guardar
+        //Acción para el botón Guardar.
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (product == null) {
-                    // Crear un nuevo producto
+                    //Crear un nuevo producto.
                     Product newProduct = new Product(txtName.getText(), txtBrand.getText(), txtCategory.getText(),
                             Double.parseDouble(txtPrice.getText()), Integer.parseInt(txtQuantity.getText()));
                     ProductManager.getInstance().addProduct(newProduct);
                     productTableModel.addProduct(newProduct);
                 } else {
-                    // Actualizar el producto existente
+                    //Actualizar el producto existente.
                     product.setName(txtName.getText());
                     product.setBrand(txtBrand.getText());
                     product.setCategory(txtCategory.getText());
@@ -87,11 +93,11 @@ public class ProductFormFrame extends JFrame {
                     ProductManager.getInstance().updateProduct(product);
                     productTableModel.updateProduct(product);
                 }
-                dispose();
+                dispose(); //Cerrar la ventana después de guardar o actualizar.
             }
         });
 
-        // Acción para el botón Eliminar
+        //Acción del botón Eliminar.
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,15 +105,15 @@ public class ProductFormFrame extends JFrame {
                     ProductManager.getInstance().deleteProduct(product);
                     productTableModel.removeProduct(product);
                 }
-                dispose();
+                dispose(); //Cerrar la ventana después de eliminar.
             }
         });
 
-        // Acción para el botón Volver
+        //Acción del botón Volver.
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                dispose(); //Cerrar la ventana sin realizar cambios.
             }
         });
     }
